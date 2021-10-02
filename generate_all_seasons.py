@@ -68,11 +68,6 @@ def run_notebook_for_season(season):
     print(f"Season {season} finished in {time.perf_counter() - start_time}")
 
 
-def create_and_run_notebook(season):
-    create_single_season_file(season)
-    run_notebook_for_season(season)
-
-
 def run_all_seasons():
     threads = [threading.Thread(name=f"Season_{i}", target=run_notebook_for_season, args=[i])
                for i in range(len(season_borders))]
@@ -91,7 +86,8 @@ def run_all_seasons():
 def main():
     if len(sys.argv) == 2:
         s = int(sys.argv[1])
-        create_and_run_notebook(s)
+        create_single_season_file(s)
+        run_notebook_for_season(s)
     else:
         print("Creating season files...")
         create_all_season_files()
