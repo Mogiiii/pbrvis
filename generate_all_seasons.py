@@ -77,6 +77,7 @@ def run_notebook_for_season(season):
 def run_all_seasons():
     threads = [threading.Thread(name=f"Season_{i}", target=run_notebook_for_season, args=[i])
                for i in range(len(season_borders))]
+    threads.reverse()
     unstarted_threads = threads.copy()
     allowed_threads = THREAD_COUNT + len(threading.enumerate())
     while len(unstarted_threads) > 0:
