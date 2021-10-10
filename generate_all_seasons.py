@@ -9,6 +9,8 @@ import threading
 BASE_NOTEBOOK_PATH = "base.ipynb"
 START_STRING = "##########"
 END_STRING = "%%%%%%%%%%"
+SEASON_STRING = "%SEASON%"
+CSV_PATH_STRING = "%CSVPATH%"
 THREAD_COUNT = 8
 
 asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())  # avoid warning
@@ -37,6 +39,8 @@ def create_single_season_file(season):
         nb = base.read()
         nb = nb.replace(START_STRING, datetime_to_formatted_string(start))
         nb = nb.replace(END_STRING, datetime_to_formatted_string(end))
+        nb = nb.replace(SEASON_STRING, str(season))
+        nb = nb.replace(CSV_PATH_STRING, "../user_ids_to_names.csv")
     with open(f"./seasons/Season {season}.ipynb", "w") as outfile:
         outfile.write(nb)
 
@@ -50,6 +54,8 @@ def create_all_season_files():
             end = s["to"]
             nb = base_nb.replace(START_STRING, datetime_to_formatted_string(start))
             nb = nb.replace(END_STRING, datetime_to_formatted_string(end))
+            nb = nb.replace(SEASON_STRING, str(i))
+            nb = nb.replace(CSV_PATH_STRING, "../user_ids_to_names.csv")
 
             with open(f"./seasons/Season {i}.ipynb", "w") as outfile:
                 outfile.write(nb)
