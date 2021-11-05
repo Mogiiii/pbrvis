@@ -13,7 +13,8 @@ SEASON_STRING = "%SEASON%"
 CSV_PATH_STRING = "%CSVPATH%"
 THREAD_COUNT = 8
 
-asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())  # avoid warning
+# moved to linux, uncomment this if running on windows
+# asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())  # avoid warning
 
 db = pymongo.MongoClient()["tpp3"]
 season_borders = db["pokeyen_bet_rankings"].aggregate(pipeline=[
