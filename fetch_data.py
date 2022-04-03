@@ -64,7 +64,10 @@ def update_pokeyen_rankings():
         if ranking:
             ranking_object["_id"] = latest_local_id
             ranking_object.pop("id", None)
-            ranking_object["timestamp"] = datetime.datetime.strptime(ranking_object["timestamp"], '%Y-%m-%d %H:%M:%S.%f')
+            try:
+                ranking_object["timestamp"] = datetime.datetime.strptime(ranking_object["timestamp"], '%Y-%m-%d %H:%M:%S.%f')
+            except ValueError:
+                ranking_object["timestamp"] = datetime.datetime.strptime(ranking_object["timestamp"], '%Y-%m-%d %H:%M:%S')
             ranking_object["ranking"] = ranking
             rankings_db.insert_one(ranking_object)
         else:
